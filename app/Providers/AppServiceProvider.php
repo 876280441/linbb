@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Topic;
+use App\Observers\TopicObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         //用户观察器
 		\App\Models\User::observe(\App\Observers\UserObserver::class);
         //帖子模型观察器
-		\App\Models\Topic::observe(\App\Observers\TopicObserver::class);
+		Topic::observe(TopicObserver::class);
         //分页使用 bootstrap
         \Illuminate\Pagination\Paginator::useBootstrap();
         //
