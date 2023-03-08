@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
 	{
         //用户观察器
 		\App\Models\User::observe(\App\Observers\UserObserver::class);
+		\App\Models\Reply::observe(\App\Observers\ReplyObserver::class);
         //帖子模型观察器
 		Topic::observe(TopicObserver::class);
         //分页使用 bootstrap
