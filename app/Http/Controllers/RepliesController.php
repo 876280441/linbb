@@ -18,10 +18,14 @@ class RepliesController extends Controller
 	public function store(ReplyRequest $request,Reply $reply)
 	{
         $reply->content = clean($request->content, 'user_topic_body');
+        if (empty($reply->content)){
+            return redirect()->back()->with('danger', '回复内容错误！');
+        }
         $reply->user_id = Auth::id();
         $reply->topic_id = $request->topic_id;
         $reply->save();
-        return redirect()->to($reply->topic->link())->with('success', '评论创建成功！');	}
+        return redirect()->to($reply->topic->link())->with('success', '评论创建成功！');
+    }
 	public function destroy(Reply $reply)
 	{
 		$this->authorize('destroy', $reply);

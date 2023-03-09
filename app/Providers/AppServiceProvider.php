@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         //帖子模型观察器
 		Topic::observe(TopicObserver::class);
         //回复表观察器
-		Reply::observe(ReplyObserver::class);
+//		Reply::observe(ReplyObserver::class);
         //分页使用 bootstrap
         \Illuminate\Pagination\Paginator::useBootstrap();
         //
