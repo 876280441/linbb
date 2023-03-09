@@ -8,7 +8,7 @@ class Reply extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content'];
+    public $fillable = ['content'];
     public function topic()
     {
         return $this->belongsTo(Topic::class);

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Reply;
 use App\Models\Topic;
+use App\Observers\ReplyObserver;
 use App\Observers\TopicObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Reply::observe(\App\Observers\ReplyObserver::class);
         //帖子模型观察器
 		Topic::observe(TopicObserver::class);
+        //回复表观察器
+		Reply::observe(ReplyObserver::class);
         //分页使用 bootstrap
         \Illuminate\Pagination\Paginator::useBootstrap();
         //
