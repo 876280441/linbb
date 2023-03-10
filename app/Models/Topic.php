@@ -19,6 +19,12 @@ class Topic extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function updateReplyCount()
+    {
+        $this->reply_count = $this->replies->count();
+        $this->save();
+    }
+
     public function scopeWithOrder($query, $order)
     {
         // 不同的排序，使用不同的数据读取逻辑
