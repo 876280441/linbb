@@ -38,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
 //		Reply::observe(ReplyObserver::class);
         //分页使用 bootstrap
         \Illuminate\Pagination\Paginator::useBootstrap();
+        \App\Models\Link::observe(\App\Observers\LinkObserver::class);
         //
     }
 }
