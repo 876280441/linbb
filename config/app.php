@@ -196,6 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        //发信服务
+        App\Providers\EasySmsServiceProvider::class,
     ],
 
     /*
