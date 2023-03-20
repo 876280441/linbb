@@ -27,7 +27,7 @@ class VerificationCodesController extends ApiController
                 ]);
             } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
                 $message = $exception->getException('aliyun')->getMessage();
-                abort(500, $message ?: '短信发送异常');
+                return $this->error(-1,$message ?: '短信发送异常');
             }
         }
 
@@ -37,8 +37,7 @@ class VerificationCodesController extends ApiController
         $expiredAt = now()->addMinutes(5);
         // 缓存验证码 5 分钟过期。
         \Cache::put($cacheKey, ['phone' => $phone, 'code' => $code], $expiredAt);
-
-        return response()->json([
+        return $this->success(200,'获取成功',[
             'key' => $key,
             'expired_at' => $expiredAt->toDateTimeString(),
         ])->setStatusCode(201);
