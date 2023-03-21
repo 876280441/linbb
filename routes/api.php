@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
             Route::post('verificationCodes', [VerificationCodesController::class, 'store'])->name('verificationCodes.store');
             // 用户注册
             Route::post('users', [UsersController::class, 'store'])->name('users.store');
+            // 图片验证码
+            Route::post('captchas', [CaptchasController::class, 'store'])->name('captchas.store');
         });
 
     // 访问频率限制

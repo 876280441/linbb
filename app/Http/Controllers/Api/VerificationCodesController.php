@@ -12,6 +12,20 @@ class VerificationCodesController extends ApiController
 {
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
+        $captchaCacheKey =  'captcha_'.$request->captcha_key;
+        //获取缓存验证码
+        $captchaData = \Cache::get($captchaCacheKey);
+        if (!$captchaData) {
+            return $this->error(403,'图片验证码已失效');
+        }
+
+        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
+            // 验证错误就清除缓存
+            \Cache::forget($captchaCacheKey);
+            return $this->error(401,'验证码错误');
+        }
+
+
         $phone = $request->phone;
         if (!app()->environment('production')) {
             $code = '1234';
@@ -37,6 +51,8 @@ class VerificationCodesController extends ApiController
         $expiredAt = now()->addMinutes(5);
         // 缓存验证码 5 分钟过期。
         \Cache::put($cacheKey, ['phone' => $phone, 'code' => $code], $expiredAt);
+        // 清除图片验证码缓存
+        \Cache::forget($captchaCacheKey);
         return $this->success(200,'获取成功',[
             'key' => $key,
             'expired_at' => $expiredAt->toDateTimeString(),
