@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -59,13 +60,31 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @mixin IdeHelperUser
+ * @property string|null $phone
+ * @property string|null $weixin_openid
+ * @property string|null $weixin_unionid
+ * @property string|null $last_actived_at
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastActivedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinOpenid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinUnionid($value)
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable,MustVerifyEmailTrait,HasRoles,ActiveUserHelper,LastActivedAtHelper;
 
     use Notifiable{
         notify as protected laravelNotify;
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
     public function notify($instance)
@@ -135,7 +154,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'introduction',
         'avatar',
-        'phone'
+        'phone',
+        'weixin_openid',
+        'weixin_unionid'
     ];
 
     /**

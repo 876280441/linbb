@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Reply whereUserId($value)
  * @mixin \Eloquent
  * @mixin IdeHelperReply
+ * @property-read \Illuminate\Database\Eloquent\Collection|Reply[] $replies
+ * @property-read int|null $replies_count
  */
 class Reply extends Model
 {
