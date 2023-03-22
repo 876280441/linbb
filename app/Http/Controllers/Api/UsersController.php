@@ -31,6 +31,17 @@ class UsersController extends ApiController
 
         // 清除验证码缓存
         \Cache::forget($cacheKey);
-        return $this->success(200,'注册成功', (array)new UserResource($user));
+        return $this->success(200,'注册成功', (array)(new UserResource($user))->showSensitiveFields());
     }
+
+    public function show(User $user, Request $request)
+    {
+        return (new UserResource($user));
+    }
+
+    public function me(Request $request)
+    {
+        return (new UserResource($request->user()))->showSensitiveFields();
+    }
+
 }

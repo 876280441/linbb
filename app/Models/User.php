@@ -72,6 +72,13 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail,JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable,MustVerifyEmailTrait,HasRoles,ActiveUserHelper,LastActivedAtHelper;
+    //隐藏字段
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'weixin_openid',
+        'weixin_unionid'
+    ];
 
     use Notifiable{
         notify as protected laravelNotify;
@@ -159,15 +166,6 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
         'weixin_unionid'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
     /**
      * The attributes that should be cast.
