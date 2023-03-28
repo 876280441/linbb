@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthorizationsController;
 use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ImagesController;
+use App\Http\Controllers\Api\TopicsController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use Illuminate\Http\Request;
@@ -54,6 +55,10 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
             Route::apiResource('categories', CategoriesController::class)->only('index');
             // 某个用户的详情
             Route::get('users/{user}', [UsersController::class, 'show'])->name('users.show');
+            // 话题列表，详情
+            Route::apiResource('topics', TopicsController::class)->only([
+                'index', 'show'
+            ]);
 
             // 登录后可以访问的接口
             Route::middleware('auth:api')->group(function() {
@@ -63,6 +68,10 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
                 Route::patch('user', [UsersController::class, 'update'])->name('user.update');
                 // 上传图片
                 Route::post('images', [ImagesController::class, 'store'])->name('images.store');
+                // 发布，修改，删除话题
+                Route::apiResource('topics', TopicsController::class)->only([
+                    'store', 'update', 'destroy'
+                ]);
 
             });
 
