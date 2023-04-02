@@ -60,6 +60,13 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
             Route::apiResource('topics', TopicsController::class)->only([
                 'index', 'show'
             ]);
+            // 话题回复列表
+            Route::apiResource('topics.replies', RepliesController::class)->only([
+                'index',
+            ]);
+            // 某个用户的回复列表
+            Route::get('users/{user}/replies', [RepliesController::class, 'userIndex'])
+                ->name('users.replies.index');
             // 某个用户发布的话题
             Route::get('users/{user}/topics', [TopicsController::class, 'userIndex'])->name('users.topics.index');
             // 登录后可以访问的接口
