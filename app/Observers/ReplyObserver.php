@@ -23,7 +23,7 @@ class ReplyObserver
 
     public function deleted(Reply $reply)
     {
-        $reply->topic()->updateReplyCount();
+//        $reply->topic()->updateReplyCount();
     }
 
     public function saving(Reply $reply)
