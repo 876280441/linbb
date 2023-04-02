@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\QueryBuilderBindable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -50,7 +51,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Topic extends Model
 {
-    use HasFactory;
+    use HasFactory,QueryBuilderBindable;
 
     protected $fillable = ['title', 'body', 'category_id', 'excerpt', 'slug'];
     public function category()
