@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthorizationsController;
 use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ImagesController;
+use App\Http\Controllers\Api\NotificationsController;
 use App\Http\Controllers\Api\RepliesController;
 use App\Http\Controllers\Api\TopicsController;
 use App\Http\Controllers\Api\VerificationCodesController;
@@ -85,6 +86,12 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
                 Route::apiResource('topics.replies', RepliesController::class)->only([
                     'store', 'destroy'
                 ]);
+
+                // 通知列表
+                Route::apiResource('notifications', NotificationsController::class)->only([
+                    'index'
+                ]);
+
 
             });
 
